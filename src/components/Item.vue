@@ -1,8 +1,10 @@
 <template lang="">
   <div class="item-section">
-    <div class="item-title">{{ item.itemName }}</div>
+    <div class="item-title">
+      <a @click="redirectToProduct()" class="anchor" role="button">{{ item.itemName }}</a>
+      </div>
     <div class="add-to-cart-button">
-      <button class="primary button cart">Add to cart</button>
+      <button @click="handleAddToCart(item)" class="primary button cart">Add to cart</button>
     </div>
     <div class="item-description">{{ item.itemDescription }}</div>
     <div class="item-price">$ {{ item.price }}</div>
@@ -13,6 +15,15 @@ export default {
   props: {
     item: Object,
   },
+  methods: {
+    handleAddToCart: (item) => {
+      console.log(item.itemId);
+    },
+    redirectToProduct: () => {
+      console.log("redirectToProduct");
+    }
+
+  }
 };
 </script>
 <style lang="scss" scoped>
