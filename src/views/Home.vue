@@ -4,7 +4,9 @@
     <div class="product-list">
       <div v-for="item in itemList" :key="item.itemId">
         <item :item="item" />
+        
       </div>
+      <div class="item-count"># of products: {{itemList.length}}</div>
     </div>
   </div>
 </template>
@@ -34,12 +36,18 @@ export default {
   grid-template-columns: minmax(min-content, 30%) 1fr;
   margin: 0 50px;
   background-color: #DFE5F3;
+  
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     margin: 0;
   }
 }
 .product-list{
-  background-color: pink;
+  background-color: white;
+}
+.item-count {
+  text-align: right;
+    padding: 20px;
+    font-weight: bold;
 }
 </style>
