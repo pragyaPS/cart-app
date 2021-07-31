@@ -35,25 +35,25 @@
     color: white;
     transition: background-color 0.2s linear, font-weight 0.2s linear;
     &:hover {
-    background-color: #034a3d;
-    color: white;
-    font-weight: bold;
-  }
-  &:focus {
-    outline: 3px solid #034a3d;
-    outline-offset: 1px;
-    font-weight: bold;
-  }
-  &:active {
-    background-color: #034a3d;
-    border-color: #034a3d;
-    color: white;
-    font-weight: bold;
-  }
-  &:disabled {
-    background-color: #84fbe5;
-    cursor: not-allowed;
-  }
+      background-color: #034a3d;
+      color: white;
+      font-weight: bold;
+    }
+    &:focus {
+      outline: 3px solid #034a3d;
+      outline-offset: 1px;
+      font-weight: bold;
+    }
+    &:active {
+      background-color: #034a3d;
+      border-color: #034a3d;
+      color: white;
+      font-weight: bold;
+    }
+    &:disabled {
+      background-color: #84fbe5;
+      cursor: not-allowed;
+    }
   }
 }
 .anchor {
