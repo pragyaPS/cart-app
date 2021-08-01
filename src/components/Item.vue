@@ -1,29 +1,52 @@
 <template lang="">
   <div class="item-section">
     <div class="item-title">
-      <a @click="redirectToProduct()" class="anchor" role="button">{{ item.itemName }}</a>
-      </div>
+      <a @click="redirectToProduct(item.itemId)" class="anchor" role="button">{{
+        item.itemName
+      }}</a>
+    </div>
     <div class="add-to-cart-button">
-      <button @click="handleAddToCart(item)" class="primary button cart">Add to cart</button>
+      <button @click="handleAddToCart()" class="primary button cart">
+        Add to cart
+      </button>
     </div>
     <div class="item-description">{{ item.itemDescription }}</div>
     <div class="item-price">$ {{ item.price }}</div>
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
+import { isEmptyObject } from "../utils/utils";
 export default {
   props: {
     item: Object,
   },
+  computed: mapGetters(["currentCart"]),
   methods: {
-    handleAddToCart: (item) => {
-      console.log(item.itemId);
-    },
-    redirectToProduct: () => {
-      console.log("redirectToProduct");
-    }
+    ...mapMutations(["updateCartList", "updateSelectedItem"]),
 
-  }
+    handleAddToCart() {
+      let payload = {};
+      let { currentCart, item } = this;
+      let itemExistsInCart = !isEmptyObject(currentCart[item?.itemId]);
+
+      if (itemExistsInCart) {
+        payload[item?.itemId] = {
+          ...item,
+          quantity: currentCart[item?.itemId]?.quantity + 1,
+        };
+        this.updateCartList(payload);
+      } else {
+        payload[item?.itemId] = { ...item, quantity: 1 };
+        this.updateCartList(payload);
+      }
+
+    },
+    redirectToProduct(itemId) {
+      this.$router.push({ path: `/product/${itemId}`})
+      this.updateSelectedItem(this.item)
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

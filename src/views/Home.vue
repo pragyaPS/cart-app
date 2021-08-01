@@ -22,7 +22,7 @@ export default {
   name: "Home",
   components: {
     Item,
-    Cart
+    Cart,
   },
   methods: {
     ...mapActions(["fetchItemList"]),

@@ -6,21 +6,16 @@
           <fa-icon class="icon" icon="arrow-left"/>
         </a>
         
-        <div class="product-title">Fullstack Hoodie</div>
-        <div class="product-category">hoodies/jacket</div>
-        <div class="product-description">Lightweight, breathable hoodie with the fullstack Crest. Guaranteed to keep you looking fresh while warm
-        </div>
-        <div class="product-estd">founded: <strong>2017</strong></div>
+        <div class="product-title">{{selectedItem.itemName}}</div>
+        <div class="product-category">{{selectedItem.category}}</div>
+        <div class="product-description">{{selectedItem.itemDescription}}</div>
+        <div class="product-estd">founded: <strong>{{selectedItem.founded}}</strong></div>
         <div class="addtocart-btn">
-          <button class="button primary">Add to cart</button>
+          <button @click="handleAddToCart()" class="button primary">Add to cart</button>
         </div>
 
       </div>
-      <div class="product-img">
-        <img src="../assets/fullstack-hoodie.png"/>
-        
-
-      </div>
+      <div class="product-img" />
     </div>
     
     
@@ -28,11 +23,22 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   methods: {
-    redirectToHome: () => {
-      console.log("redirectToHome");
+    redirectToHome() {
+      console.log("redirectToHome", this.$route.props);
+    },
+    handleAddToCart() {
+      console.log("Add to cart")
     }
+  },
+  computed: {
+    ...mapGetters(["selectedItem", "currentCart"])
+  },
+  mounted(){
+
+    console.log()
   }
   
 }
@@ -41,6 +47,10 @@ export default {
 .product-img {
   width: 200px;
   height: 200px;
+  background-image: url('../assets/fullstack-hoodie.png');
+  background-size: cover;
+  justify-self: center;
+  align-self: center;
 }
 .product-container {
   display: flex;
