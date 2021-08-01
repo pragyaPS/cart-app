@@ -1,14 +1,23 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Login",
+    component: () => import("../views/Login.vue"),
   },
   {
-    path: "/product",
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/Register.vue"),
+  },
+  {
+    path: "/home",
+    name: "Home",
+    component: () => import("../views/Home.vue"),
+  },
+  {
+    path: "/product/:itemId",
     name: "Product",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

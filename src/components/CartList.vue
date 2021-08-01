@@ -1,24 +1,48 @@
 <template lang="">
-  <div class="cart-list">
-    <div class="cart-title">The Fullstack hoodie</div>
+  <div
+    class="cart-list"
+    v-for="(cart, index) in Object.values(currentCart)"
+    :key="index"
+  >
+    <div class="cart-title">{{ cart.itemName }}</div>
     <div class="quantity-links">
-      <a @click="changeQuantity('add')" role="button">
+      <a @click="changeQuantity(cart.itemId, 'add')" role="button">
         <fa-icon icon="arrow-circle-up" />
       </a>
-      <a @click="changeQuantity('remove')" role="button"><fa-icon icon="arrow-circle-down" /></a>
+      <a @click="changeQuantity(cart.itemId, 'remove')" role="button"
+        ><fa-icon icon="arrow-circle-down"
+      /></a>
     </div>
-    <div class="item-price">19.99$ each</div>
-    <div class="counts">Quantity: 2</div>
+    <div class="item-price">{{ cart.price }}$ each</div>
+    <div class="counts">Quantity: {{ cart.quantity }}</div>
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
-    methods: {
-        changeQuantity: (action) => {
-            console.log("changeQuantity", action);
-        }
-
-    }
+  computed: {
+    ...mapGetters(["currentCart"]),
+  },
+  methods: {
+    ...mapMutations(["updateCartList"]),
+    changeQuantity(itemId, action) {
+      let payload = {};
+      let { currentCart } = this;
+      if (action === "add") {
+        payload[itemId] = {
+          ...currentCart[itemId],
+          quantity: currentCart[itemId]?.quantity + 1,
+        };
+        this.updateCartList(payload);
+      } else if (action === "remove" && currentCart[itemId].quantity > 1) {
+        payload[itemId] = {
+          ...currentCart[itemId],
+          quantity: currentCart[itemId]?.quantity - 1,
+        };
+        this.updateCartList(payload);
+      }
+    },
+  },
 };
 </script>
 <style lang="scss">
