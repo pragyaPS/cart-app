@@ -40,11 +40,10 @@ export default {
         payload[item?.itemId] = { ...item, quantity: 1 };
         this.updateCartList(payload);
       }
-
     },
     redirectToProduct(itemId) {
-      this.$router.push({ path: `/product/${itemId}`})
-      this.updateSelectedItem(this.item)
+      this.$router.push({ path: `/product/${itemId}` });
+      this.updateSelectedItem(this.item);
     },
   },
 };

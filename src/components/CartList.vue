@@ -35,7 +35,6 @@ export default {
         };
         this.updateCartList(payload);
       } else if (action === "remove" && currentCart[itemId].quantity > 1) {
-       
         payload[itemId] = {
           ...currentCart[itemId],
           quantity: currentCart[itemId]?.quantity - 1,
