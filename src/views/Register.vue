@@ -55,6 +55,7 @@ export default {
 </script>
 <style lang="scss">
 .register-container {
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

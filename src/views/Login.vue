@@ -53,6 +53,7 @@ export default {
 </script>
 <style lang="scss">
 .login-container {
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
