@@ -8,7 +8,7 @@
       <div v-for="item in itemList" :key="item.itemId">
         <Item :item="item" />
       </div>
-      <div class="item-count"># of products: {{ itemList.length }}</div>
+      <div class="item-count"># of products: {{ itemList?.length }}</div>
     </div>
   </div>
 </template>
