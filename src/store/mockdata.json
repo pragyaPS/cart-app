@@ -13,8 +13,8 @@
         "itemName": "The Fullstack Tee",
         "itemDescription": "The original fullstack clothing item. ALways prepared to keep your style in check",
         "price": "15.99",
-        "category": "",
-        "founded": "",
+        "category": "Hoodies/tees",
+        "founded": "2019",
         "imageUrl": ""
     },
     {
@@ -22,8 +22,8 @@
         "itemName": "The Fullstack fitted Cap",
         "itemDescription": "Stay comfortable and cool with the first fullstack fitted cap, featuring a normal bill and medium crown",
         "price": "15.99",
-        "category": "",
-        "founded": "",
+        "category": "Hoodies/cap",
+        "founded": "2020",
         "imageUrl": ""
     },
     {
@@ -31,8 +31,8 @@
         "itemName": "The Fullstack Jacket",
         "itemDescription": "Keep warm and protected with the rugged, durable fullstack lightweight jacket",
         "price": "49.99",
-        "category": "",
-        "founded": "",
+        "category": "Hoodies/jacket",
+        "founded": "2019",
         "imageUrl": ""
     }
 ]

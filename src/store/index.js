@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import itemList from "./mockdata.json";
+import axios from "axios";
 
 const INITIAL_TOTAL = {
   quantity: 0,
@@ -54,8 +55,17 @@ export default createStore({
   },
   actions: {
     async fetchItemList({ commit }) {
-      let response = await Promise.resolve(itemList);
-      commit("updateItemList", response);
+      try {
+        let response = await axios
+          .get("https://us-central1-cart-app-auth.cloudfunctions.net/itemList")
+          .then((res) => res.data);
+        commit("updateItemList", response[0].itemList);
+      } catch (err) {
+        console.log("Error occurred while fetching firebase API", err);
+        // Its a fallback mock json in case API fails
+        let response = await Promise.resolve(itemList);
+        commit("updateItemList", response);
+      }
     },
   },
   modules: {},
