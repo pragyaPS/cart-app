@@ -53,7 +53,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   background-color: white;
-  justify-items: start;
+  justify-items: flex-start;
   padding: 20px;
 }
 .button {

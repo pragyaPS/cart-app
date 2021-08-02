@@ -22,18 +22,24 @@ const getTotalFromCartList = (currentCart, total) => {
 };
 export default createStore({
   state: {
+    user: JSON.parse(localStorage.getItem("user")) || null,
     itemList: [],
     currentCart: {},
     total: { ...INITIAL_TOTAL },
     selectedItem: {},
   },
   getters: {
+    user: (state) => state.user,
     itemList: (state) => state.itemList,
     currentCart: (state) => state.currentCart,
     total: (state) => state.total,
     selectedItem: (state) => state.selectedItem,
   },
   mutations: {
+    setUser: (state, payload) => {
+      console.log("inside set user");
+      state.user = payload;
+    },
     updateItemList: (state, payload) => {
       state.itemList = payload;
     },
