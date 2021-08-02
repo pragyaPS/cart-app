@@ -1,10 +1,11 @@
 <template>
-  <div id="nav">
+  <div v-if="user" id="nav">
     <a @click="handleLogout">logout</a>
     <div class="icon-lables">
       <label class="shop-label"><fa-icon class="icon" icon="user" />shop</label>
       <label class="cart-label"
-        ><fa-icon class="icon" icon="shopping-cart" /> 0</label
+        ><fa-icon class="icon" icon="shopping-cart" />
+        {{ total.quantity }}</label
       >
     </div>
   </div>
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { useStore } from "vuex";
 import firebase from "firebase";
 import { useRouter } from "vue-router";
@@ -34,6 +36,8 @@ export default {
 
     return {
       handleLogout,
+      user: computed(() => store.getters["user"]),
+      total: computed(() => store.getters["total"]),
     };
   },
 };
