@@ -1,10 +1,46 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/product">Product</router-link>
+    <router-link to="/home">Home</router-link> |
+    <router-link to="/product">Product</router-link> |
+    <button @click="handleLogout">logout</button>
   </div>
   <router-view />
 </template>
+
+<script>
+import { onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import firebase from "firebase";
+
+export default {
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+
+    onBeforeMount(() => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          router.replace("/login");
+        } else if (
+          route.path === "/login" ||
+          route.path === "/" ||
+          route.path === "/register"
+        ) {
+          router.replace("/home");
+        }
+      });
+    });
+
+    const handleLogout = () => {
+      firebase.auth().signOut();
+    };
+
+    return {
+      handleLogout,
+    };
+  },
+};
+</script>
 
 <style lang="scss">
 *,
