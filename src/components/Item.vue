@@ -15,8 +15,8 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import { isEmptyObject } from "../utils/utils";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+//import { isEmptyObject } from "../utils/utils";
 export default {
   props: {
     item: Object,
@@ -24,22 +24,10 @@ export default {
   computed: mapGetters(["currentCart"]),
   methods: {
     ...mapMutations(["updateCartList", "updateSelectedItem"]),
+    ...mapActions(["addToCart"]),
 
     handleAddToCart() {
-      let payload = {};
-      let { currentCart, item } = this;
-      let itemExistsInCart = !isEmptyObject(currentCart[item?.itemId]);
-
-      if (itemExistsInCart) {
-        payload[item?.itemId] = {
-          ...item,
-          quantity: currentCart[item?.itemId]?.quantity + 1,
-        };
-        this.updateCartList(payload);
-      } else {
-        payload[item?.itemId] = { ...item, quantity: 1 };
-        this.updateCartList(payload);
-      }
+      this.addToCart(this.item);
     },
     redirectToProduct(itemId) {
       this.$router.push({ path: `/product/${itemId}` });
@@ -53,7 +41,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   background-color: white;
-  justify-items: start;
+  justify-items: flex-start;
   padding: 20px;
 }
 .button {

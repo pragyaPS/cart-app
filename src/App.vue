@@ -1,42 +1,43 @@
 <template>
-  <div id="nav">
-    <router-link to="/home">Home</router-link> |
-    <router-link to="/product">Product</router-link> |
-    <button @click="handleLogout">logout</button>
+  <div v-if="user" id="nav">
+    <a @click="handleLogout">logout</a>
+    <div class="icon-lables">
+      <label class="shop-label"><fa-icon class="icon" icon="user" />shop</label>
+      <label class="cart-label"
+        ><fa-icon class="icon" icon="shopping-cart" />
+        {{ total.quantity }}</label
+      >
+    </div>
   </div>
   <router-view />
 </template>
 
 <script>
-import { onBeforeMount } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { computed } from "vue";
+import { useStore } from "vuex";
 import firebase from "firebase";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
+    const store = useStore();
     const router = useRouter();
-    const route = useRoute();
-
-    onBeforeMount(() => {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (!user) {
-          router.replace("/login");
-        } else if (
-          route.path === "/login" ||
-          route.path === "/" ||
-          route.path === "/register"
-        ) {
-          router.replace("/home");
-        }
-      });
-    });
 
     const handleLogout = () => {
-      firebase.auth().signOut();
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          localStorage.setItem("user", null);
+          store.commit("setUser", null);
+          router.replace("/login");
+        });
     };
 
     return {
       handleLogout,
+      user: computed(() => store.getters["user"]),
+      total: computed(() => store.getters["total"]),
     };
   },
 };
@@ -96,15 +97,35 @@ export default {
   cursor: pointer;
 }
 #nav {
+  display: flex;
+  justify-content: space-between;
   padding: 30px;
 
   a {
-    font-weight: bold;
     color: #2c3e50;
+    cursor: pointer;
+    text-decoration: underline;
 
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+}
+.icon-lables {
+  display: flex;
+  gap: 5px;
+  .icon {
+    margin-right: 3px;
+  }
+  .shop-label {
+    background-color: white;
+    padding: 5px 8px;
+  }
+  .cart-label {
+    padding: 5px 8px;
+    background-color: #06ae8e;
+    color: white;
+    border-radius: 4px;
   }
 }
 </style>

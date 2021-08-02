@@ -20,26 +20,28 @@
           </button>
         </div>
       </div>
-      <div class="product-img" />
+      <div :style="backgroundStyle" class="product-img" />
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   methods: {
+    ...mapActions(["addToCart"]),
     redirectToHome() {
-      console.log("redirectToHome", this.$route.props);
+      this.$router.back();
     },
     handleAddToCart() {
+      this.addToCart(this.selectedItem);
       console.log("Add to cart");
     },
   },
   computed: {
     ...mapGetters(["selectedItem", "currentCart"]),
-  },
-  mounted() {
-    console.log();
+    backgroundStyle() {
+      return `background-image: url(${this.selectedItem.imageUrl})`;
+    },
   },
 };
 </script>
@@ -47,7 +49,7 @@ export default {
 .product-img {
   width: 200px;
   height: 200px;
-  background-image: url("../assets/fullstack-hoodie.png");
+  /* background-image: url("../assets/fullstack-hoodie.png"); */
   background-size: cover;
   justify-self: center;
   align-self: center;
@@ -60,7 +62,7 @@ export default {
 .product-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 45vw;
+  width: 40vw;
   background-color: white;
 }
 .product-title,

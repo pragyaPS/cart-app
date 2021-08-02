@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import itemList from "./mockdata.json";
 import axios from "axios";
+import { isEmptyObject } from "../utils/utils";
 
 const INITIAL_TOTAL = {
   quantity: 0,
@@ -20,20 +21,27 @@ const getTotalFromCartList = (currentCart, total) => {
   );
   return { quantity, price: parseFloat(price).toFixed(2) };
 };
+
 export default createStore({
   state: {
+    user: JSON.parse(localStorage.getItem("user")) || null,
     itemList: [],
     currentCart: {},
     total: { ...INITIAL_TOTAL },
     selectedItem: {},
   },
   getters: {
+    user: (state) => state.user,
     itemList: (state) => state.itemList,
     currentCart: (state) => state.currentCart,
     total: (state) => state.total,
     selectedItem: (state) => state.selectedItem,
   },
   mutations: {
+    setUser: (state, payload) => {
+      console.log("inside set user");
+      state.user = payload;
+    },
     updateItemList: (state, payload) => {
       state.itemList = payload;
     },
@@ -65,6 +73,23 @@ export default createStore({
         // Its a fallback mock json in case API fails
         let response = await Promise.resolve(itemList);
         commit("updateItemList", response);
+      }
+    },
+    addToCart({ commit, state }, item) {
+      console.log(state, payload, commit);
+      let payload = {};
+      let { currentCart } = state;
+      let itemExistsInCart = !isEmptyObject(currentCart[item.itemId]);
+
+      if (itemExistsInCart) {
+        payload[item.itemId] = {
+          ...item,
+          quantity: currentCart[item?.itemId]?.quantity + 1,
+        };
+        commit("updateCartList", payload);
+      } else {
+        payload[item?.itemId] = { ...item, quantity: 1 };
+        commit("updateCartList", payload);
       }
     },
   },

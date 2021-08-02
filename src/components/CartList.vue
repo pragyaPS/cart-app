@@ -49,7 +49,7 @@ export default {
 .cart-list {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  justify-items: start;
+  justify-items: flex-start;
   padding: 20px;
   row-gap: 8px;
   @media (max-width: 1024px) {
